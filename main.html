@@ -56,6 +56,18 @@
       cursor: pointer;
     }
 
+    /* Card menor e totalmente transparente */
+    .user-card {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      box-shadow: none !important;
+      transition: all 0.3s ease;
+      overflow: visible;
+      padding: 1rem; /* menos padding */
+      max-width: 20rem; /* menor largura */
+      border-radius: 1rem;
+    }
+
     @media (max-width: 640px) {
       .user-card {
         transform: scale(1.1);
@@ -83,9 +95,9 @@
     <i class="fas fa-volume-up text-gray-300 ml-2"></i>
   </div>
 
-  <!-- 🌐 CARD -->
+  <!-- 🌐 CARD menor e transparente -->
   <main class="min-h-screen flex items-center justify-center p-4">
-    <div class="user-card bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-md w-full">
+    <div class="user-card w-full">
       <div class="flex flex-col items-center">
         <div class="relative">
           <img src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg" class="w-24 h-24 rounded-full border-4 border-teal-400 object-cover" />
@@ -165,12 +177,11 @@
       progress.style.width = width + "%";
     }, 1000);
 
-    // 🔍 Detecta se é mobile ou desktop (exemplo de uso)
+    // Detecta se é mobile
     function isMobile() {
       return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     }
 
-    // Exemplo: ajustar fonte se for celular
     if (isMobile()) {
       document.querySelector(".user-card").style.transform = "scale(1.1)";
     } else {
