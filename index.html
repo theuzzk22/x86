@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crazy - Intro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: black;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .crazy-link {
+      font-size: 5rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: white;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .crazy-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 3px;
+      background: white;
+      transition: width 0.3s ease;
+    }
+
+    .crazy-link:hover {
+      color: #4fd1c5;
+    }
+
+    .crazy-link:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <a href="main.html" class="crazy-link">CRAZY</a>
+</body>
+</html>
