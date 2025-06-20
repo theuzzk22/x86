@@ -1,338 +1,132 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Perfil Social Interativo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crazy Main</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+      background: black;
+      color: white;
+    }
 
-      body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        color: white;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
+    .video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
 
-      .video-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        overflow: hidden;
-      }
+    #video-background {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: cover;
+    }
 
-      #video-background {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        /* Removi blur e opacity para vídeo nítido */
-        /* opacity: 0.3; */
-        /* filter: blur(3px); */
-      }
+    .volume-control {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      background: rgba(26, 32, 44, 0.8);
+      padding: 10px 15px;
+      border-radius: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
 
-      .user-card {
-        background: rgba(26, 32, 44, 0.8);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        overflow: hidden;
-        transform-style: preserve-3d;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      }
+    .volume-control input[type="range"] {
+      width: 100px;
+      margin: 0 10px;
+      -webkit-appearance: none;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      outline: none;
+    }
 
-      .user-card:hover {
-        transform: translateY(-5px);
-      }
+    .volume-control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #4fd1c5;
+      cursor: pointer;
+    }
 
-      .profile-pic {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 3px solid #4fd1c5;
-        object-fit: cover;
-      }
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 8px black;
+    }
+  </style>
+</head>
+<body>
 
-      .status {
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        background-color: #48bb78;
-        border: 2px solid #1a365d;
-      }
+  <!-- 🎥 Vídeo de fundo -->
+  <div class="video-container">
+    <video id="video-background" autoplay muted loop playsinline>
+      <source src="/igarata6.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo.
+    </video>
+  </div>
 
-      .spotify-bar {
-        height: 4px;
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 2px;
-        margin: 10px 0;
-      }
+  <!-- 🔊 Áudio de fundo -->
+  <audio id="audio" preload="auto" loop autoplay>
+    <source src="/igarata6.mp3" type="audio/mpeg" />
+  </audio>
 
-      .spotify-progress {
-        height: 100%;
-        background: linear-gradient(90deg, #4fd1c5 0%, #38b2ac 100%);
-        border-radius: 2px;
-        width: 30%;
-      }
+  <!-- 📶 Controle de volume -->
+  <div class="volume-control text-white">
+    <i class="fas fa-volume-down text-gray-300"></i>
+    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5" />
+    <i class="fas fa-volume-up text-gray-300"></i>
+  </div>
 
-      .sociais a {
-        transition: all 0.3s ease;
-        margin: 0 5px;
-      }
+  <!-- Conteúdo principal -->
+  <div class="content">
+    Bem-vindo ao CRAZY
+  </div>
 
-      .sociais a:hover {
-        transform: scale(1.2);
-      }
+  <!-- JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const volumeControl = document.getElementById('volumeControl');
+      const audio = document.getElementById('audio');
 
-      #voucherBtn {
-        position: relative;
-        display: inline-block;
-        color: white;
-        text-decoration: none;
-        font-size: 1.5rem;
-        font-weight: 700;
-        overflow: hidden;
-      }
+      // Ajuste inicial
+      audio.volume = parseFloat(volumeControl.value);
 
-      #voucherBtn:before {
-        content: attr(data-text);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 0;
-        color: #4fd1c5;
-        overflow: hidden;
-        transition: width 0.3s ease;
-        white-space: nowrap;
-      }
-
-      #voucherBtn:hover:before {
-        width: 100%;
-      }
-
-      .volume-control {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        display: flex;
-        align-items: center;
-        background: rgba(26, 32, 44, 0.8);
-        padding: 10px 15px;
-        border-radius: 30px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      }
-
-      .volume-control input[type='range'] {
-        width: 100px;
-        margin: 0 10px;
-        -webkit-appearance: none;
-        height: 5px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 5px;
-        outline: none;
-      }
-
-      .volume-control input[type='range']::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        background: #4fd1c5;
-        cursor: pointer;
-      }
-
-      .controls {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-sizing: border-box;
-      }
-
-      .controls button {
-        background: rgba(26, 32, 44, 0.8);
-        color: white;
-        border: none;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        font-size: 1.2rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .controls button:hover {
-        background: #4fd1c5;
-        transform: scale(1.1);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="video-container">
-      <video id="video-background" autoplay muted loop>
-        <source
-          src="/igarata6.mp4"
-          type="video/mp4"
-        />
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-
-    <audio id="audio" preload="auto" loop>
-      <source
-        src="/igarata6.mp3"
-        type="audio/mp3"
-      />
-      Seu navegador não suporta áudio.
-    </audio>
-
-    <div class="volume-control">
-      <i class="fas fa-volume-down text-gray-300"></i>
-      <input
-        type="range"
-        id="volumeControl"
-        min="0"
-        max="1"
-        step="0.01"
-        value="0.5"
-      />
-      <i class="fas fa-volume-up text-gray-300"></i>
-    </div>
-
-    <main
-      class="container mx-auto px-4 py-20 flex items-center justify-center"
-    >
-      <div class="user-card w-full max-w-md p-6">
-        <div class="flex flex-col items-center">
-          <div class="relative">
-            <img
-              src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg"
-              alt="Foto de Perfil"
-              class="profile-pic"
-            />
-            <span class="status"></span>
-          </div>
-
-          <div class="mt-4 text-center">
-            <div class="flex items-center justify-center space-x-2">
-              <h2 class="text-xl font-bold">@dominacao</h2>
-              <i class="fas fa-gem text-purple-400" title="Nitro"></i>
-              <i class="fas fa-bolt text-yellow-400" title="Server Boost"></i>
-              <i class="fas fa-trophy text-blue-400" title="Quest"></i>
-            </div>
-            <p class="text-gray-300">Nível 8</p>
-          </div>
-
-          <div class="spotify-info mt-6 w-full">
-            <div class="flex items-center text-sm mb-1">
-              <i class="fab fa-spotify text-green-500 mr-2"></i>
-              <span>Ouvindo agora</span>
-            </div>
-
-            <div class="flex items-center">
-              <img
-                src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg"
-                alt="Capa do Spotify"
-                class="w-12 h-12 rounded mr-3"
-              />
-              <div>
-                <div class="font-medium">Dominando a Vida</div>
-                <div class="text-sm text-gray-400">@dominacao</div>
-              </div>
-            </div>
-
-            <div class="spotify-bar mt-3">
-              <div class="spotify-progress"></div>
-            </div>
-
-            <div class="flex justify-between text-xs text-gray-400 mt-1">
-              <span>1:42</span>
-              <span>3:25</span>
-            </div>
-          </div>
-
-          <div class="sociais mt-6">
-            <a
-              href="https://instagram.com/crashador"
-              target="_blank"
-              class="text-pink-500 mx-2"
-              ><i class="fab fa-instagram text-xl"></i
-            ></a>
-            <a
-              href="https://tiktok.com/@crashador"
-              target="_blank"
-              class="text-black dark:text-white mx-2"
-              ><i class="fab fa-tiktok text-xl"></i
-            ></a>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <div class="controls">
-      <button id="prevBtn">◀</button>
-      <button id="nextBtn">▶</button>
-    </div>
-
-    <div
-      class="fixed bottom-10 left-0 right-0 flex justify-center"
-    >
-      <div
-        class="black-overlay bg-black bg-opacity-70 px-6 py-3 rounded-full"
-      >
-        <a href="#" id="voucherBtn" data-text="CRAZY">CRAZY</a>
-      </div>
-    </div>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Controle de volume
-        const volumeControl = document.getElementById('volumeControl');
-        const audio = document.getElementById('audio');
-        const video = document.getElementById('video-background');
-
-        volumeControl.addEventListener('input', function () {
-          const volume = parseFloat(this.value);
-          audio.volume = volume;
-          // vídeo está muted, volume não faz efeito
-          video.volume = volume;
-        });
-
-        // Simular progresso do Spotify
-        setInterval(function () {
-          const progress = document.querySelector('.spotify-progress');
-          let width = parseFloat(progress.style.width) || 0;
-          width = (width + 0.5) % 100;
-          progress.style.width = width + '%';
-        }, 1000);
-
-        // Simular mudança de música
-        setInterval(function () {
-          // Aqui você pode adicionar lógica para mudar a música exibida
-          console.log('Mudando música simulada...');
-        }, 30000);
+      // Atualizar volume conforme controle
+      volumeControl.addEventListener('input', function () {
+        audio.volume = parseFloat(this.value);
       });
-    </script>
-  </body>
+    });
+  </script>
+
+  <!-- Font Awesome para ícones de volume -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
 </html>
