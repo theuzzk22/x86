@@ -1,20 +1,19 @@
-<!-- ARQUIVO: main.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Perfil Social Interativo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-    html, body {
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      background: black;
       font-family: 'Poppins', sans-serif;
+      background-color: black;
       color: white;
       overflow: hidden;
     }
@@ -23,60 +22,18 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
       height: 100%;
+      width: 100%;
       z-index: -1;
-      overflow: hidden;
     }
 
     #video-background {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%;
-      min-height: 100%;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
       object-fit: cover;
-    }
-
-    .user-card {
-      background: rgba(26, 32, 44, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .user-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .profile-pic {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 3px solid #4fd1c5;
-      object-fit: cover;
-    }
-
-    .status {
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background-color: #48bb78;
-      border: 2px solid #1a365d;
-    }
-
-    .spotify-bar {
-      height: 4px;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 2px;
-      margin: 10px 0;
     }
 
     .spotify-progress {
@@ -86,35 +43,8 @@
       width: 30%;
     }
 
-    .sociais a {
-      transition: all 0.3s ease;
-      margin: 0 5px;
-    }
-
-    .sociais a:hover {
-      transform: scale(1.2);
-    }
-
-    .volume-control {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      display: flex;
-      align-items: center;
-      background: rgba(26, 32, 44, 0.8);
-      padding: 10px 15px;
-      border-radius: 30px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
     .volume-control input[type="range"] {
       width: 100px;
-      margin: 0 10px;
-      -webkit-appearance: none;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-      outline: none;
     }
 
     .volume-control input[type="range"]::-webkit-slider-thumb {
@@ -126,75 +56,50 @@
       cursor: pointer;
     }
 
-    .controls {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 20px;
-      box-sizing: border-box;
-    }
-
-    .controls button {
-      background: rgba(26, 32, 44, 0.8);
-      color: white;
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .controls button:hover {
-      background: #4fd1c5;
-      transform: scale(1.1);
+    @media (max-width: 640px) {
+      .user-card {
+        transform: scale(1.1);
+      }
     }
   </style>
 </head>
 <body>
-
   <!-- 🎥 Vídeo de fundo -->
   <div class="video-container">
     <video id="video-background" autoplay muted loop playsinline>
-      <source src="igarata6.mp4" type="video/mp4">
+      <source src="igarata6.mp4" type="video/mp4" />
     </video>
   </div>
 
   <!-- 🔊 Áudio MP3 -->
   <audio id="audio" preload="auto" loop>
-    <source src="igarata6.mp3" type="audio/mpeg">
+    <source src="igarata6.mp3" type="audio/mpeg" />
   </audio>
 
   <!-- 🔉 Volume -->
-  <div class="volume-control">
-    <i class="fas fa-volume-down text-gray-300"></i>
-    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
-    <i class="fas fa-volume-up text-gray-300"></i>
+  <div class="volume-control fixed bottom-4 right-4 bg-black bg-opacity-50 px-4 py-2 rounded-full flex items-center z-10">
+    <i class="fas fa-volume-down text-gray-300 mr-2"></i>
+    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5" />
+    <i class="fas fa-volume-up text-gray-300 ml-2"></i>
   </div>
 
-  <!-- 🌐 CARD do perfil -->
-  <main class="container mx-auto px-4 py-20 flex items-center justify-center">
-    <div class="user-card w-full max-w-md p-6">
+  <!-- 🌐 CARD -->
+  <main class="min-h-screen flex items-center justify-center p-4">
+    <div class="user-card bg-black bg-opacity-60 backdrop-blur-md p-6 rounded-xl shadow-lg max-w-md w-full">
       <div class="flex flex-col items-center">
         <div class="relative">
-          <img src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg" alt="Foto de Perfil" class="profile-pic">
-          <span class="status"></span>
+          <img src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg" class="w-24 h-24 rounded-full border-4 border-teal-400 object-cover" />
+          <span class="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-blue-900 rounded-full"></span>
         </div>
 
         <div class="mt-4 text-center">
-          <div class="flex items-center justify-center space-x-2">
-            <h2 class="text-xl font-bold">@dominacao</h2>
+          <div class="flex items-center justify-center gap-2 text-lg font-bold">
+            <span>@dominacao</span>
             <i class="fas fa-gem text-purple-400" title="Nitro"></i>
-            <i class="fas fa-bolt text-yellow-400" title="Server Boost"></i>
+            <i class="fas fa-bolt text-yellow-400" title="Boost"></i>
             <i class="fas fa-trophy text-blue-400" title="Quest"></i>
           </div>
-          <p class="text-gray-300">Nível 8</p>
+          <p class="text-gray-300 text-sm">Nível 8</p>
         </div>
 
         <div class="spotify-info mt-6 w-full">
@@ -202,30 +107,27 @@
             <i class="fab fa-spotify text-green-500 mr-2"></i>
             <span>Ouvindo agora</span>
           </div>
-
           <div class="flex items-center">
-            <img src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg" alt="Capa do Spotify" class="w-12 h-12 rounded mr-3">
+            <img src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg" class="w-12 h-12 rounded mr-3" />
             <div>
               <div class="font-medium">Dominando a Vida</div>
               <div class="text-sm text-gray-400">@dominacao</div>
             </div>
           </div>
-
-          <div class="spotify-bar mt-3">
+          <div class="h-1 bg-white bg-opacity-20 rounded mt-3">
             <div class="spotify-progress"></div>
           </div>
-
           <div class="flex justify-between text-xs text-gray-400 mt-1">
             <span>1:42</span>
             <span>3:25</span>
           </div>
         </div>
 
-        <div class="sociais mt-6">
-          <a href="https://instagram.com/crashador" target="_blank" class="text-pink-500 mx-2">
+        <div class="sociais mt-6 flex justify-center gap-4">
+          <a href="https://instagram.com/crashador" target="_blank" class="text-pink-500">
             <i class="fab fa-instagram text-xl"></i>
           </a>
-          <a href="https://tiktok.com/@crashador" target="_blank" class="text-black dark:text-white mx-2">
+          <a href="https://tiktok.com/@crashador" target="_blank" class="text-white">
             <i class="fab fa-tiktok text-xl"></i>
           </a>
         </div>
@@ -234,32 +136,46 @@
   </main>
 
   <!-- Botões laterais -->
-  <div class="controls">
-    <button id="prevBtn">◀</button>
-    <button id="nextBtn">▶</button>
+  <div class="controls absolute top-1/2 w-full flex justify-between px-4 z-10">
+    <button id="prevBtn" class="bg-black bg-opacity-60 rounded-full w-12 h-12 text-white text-xl">◀</button>
+    <button id="nextBtn" class="bg-black bg-opacity-60 rounded-full w-12 h-12 text-white text-xl">▶</button>
   </div>
 
-  <!-- Script -->
+  <!-- Scripts -->
   <script>
-    const audio = document.getElementById('audio');
-    const volumeControl = document.getElementById('volumeControl');
+    const audio = document.getElementById("audio");
+    const volumeControl = document.getElementById("volumeControl");
 
-    audio.volume = parseFloat(volumeControl.value);
+    document.body.addEventListener(
+      "click",
+      () => {
+        audio.play().catch(() => {});
+      },
+      { once: true }
+    );
 
-    document.body.addEventListener('click', () => {
-      audio.play().catch(() => {});
-    }, { once: true });
-
-    volumeControl.addEventListener('input', function () {
+    volumeControl.addEventListener("input", function () {
       audio.volume = parseFloat(this.value);
     });
 
     setInterval(() => {
-      const progress = document.querySelector('.spotify-progress');
+      const progress = document.querySelector(".spotify-progress");
       let width = parseFloat(progress.style.width) || 0;
       width = (width + 0.5) % 100;
-      progress.style.width = width + '%';
+      progress.style.width = width + "%";
     }, 1000);
+
+    // 🔍 Detecta se é mobile ou desktop (exemplo de uso)
+    function isMobile() {
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
+
+    // Exemplo: ajustar fonte se for celular
+    if (isMobile()) {
+      document.querySelector(".user-card").style.transform = "scale(1.1)";
+    } else {
+      document.querySelector(".user-card").style.transform = "scale(1)";
+    }
   </script>
 </body>
 </html>
