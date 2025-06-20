@@ -1,3 +1,4 @@
+<!-- ARQUIVO: main.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,8 +13,8 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Poppins', sans-serif;
       background: black;
+      font-family: 'Poppins', sans-serif;
       color: white;
       overflow: hidden;
     }
@@ -161,23 +162,23 @@
   <!-- 🎥 Vídeo de fundo -->
   <div class="video-container">
     <video id="video-background" autoplay muted loop playsinline>
-      <source src="igarata6.mp4" type="video/mp4" />
+      <source src="igarata6.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- 🔊 Áudio de fundo -->
+  <!-- 🔊 Áudio MP3 -->
   <audio id="audio" preload="auto" loop>
-    <source src="igarata6.mp3" type="audio/mpeg" />
+    <source src="igarata6.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- 🔉 Controle de volume -->
+  <!-- 🔉 Volume -->
   <div class="volume-control">
     <i class="fas fa-volume-down text-gray-300"></i>
     <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
     <i class="fas fa-volume-up text-gray-300"></i>
   </div>
 
-  <!-- 🌐 Conteúdo principal -->
+  <!-- 🌐 CARD do perfil -->
   <main class="container mx-auto px-4 py-20 flex items-center justify-center">
     <div class="user-card w-full max-w-md p-6">
       <div class="flex flex-col items-center">
@@ -232,18 +233,19 @@
     </div>
   </main>
 
+  <!-- Botões laterais -->
   <div class="controls">
     <button id="prevBtn">◀</button>
     <button id="nextBtn">▶</button>
   </div>
 
+  <!-- Script -->
   <script>
     const audio = document.getElementById('audio');
     const volumeControl = document.getElementById('volumeControl');
 
     audio.volume = parseFloat(volumeControl.value);
 
-    // Iniciar áudio ao clicar
     document.body.addEventListener('click', () => {
       audio.play().catch(() => {});
     }, { once: true });
@@ -252,7 +254,6 @@
       audio.volume = parseFloat(this.value);
     });
 
-    // Spotify progress fake
     setInterval(() => {
       const progress = document.querySelector('.spotify-progress');
       let width = parseFloat(progress.style.width) || 0;
@@ -260,6 +261,5 @@
       progress.style.width = width + '%';
     }, 1000);
   </script>
-
 </body>
 </html>
