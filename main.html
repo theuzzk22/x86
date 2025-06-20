@@ -1,91 +1,264 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>CRAZY - Main</title>
+  <meta charset="UTF-8">
+  <title>Perfil Social Interativo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
       background: black;
-      font-family: sans-serif;
       color: white;
+      overflow: hidden;
+    }
+
+    .video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
     }
 
     #video-background {
-      position: fixed;
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       min-width: 100%;
       min-height: 100%;
       object-fit: cover;
-      z-index: -1;
     }
 
-    .content {
-      position: relative;
-      z-index: 1;
+    .user-card {
+      background: rgba(26, 32, 44, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #4fd1c5;
+      object-fit: cover;
+    }
+
+    .status {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #48bb78;
+      border: 2px solid #1a365d;
+    }
+
+    .spotify-bar {
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      margin: 10px 0;
+    }
+
+    .spotify-progress {
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
+      background: linear-gradient(90deg, #4fd1c5 0%, #38b2ac 100%);
+      border-radius: 2px;
+      width: 30%;
+    }
+
+    .sociais a {
+      transition: all 0.3s ease;
+      margin: 0 5px;
+    }
+
+    .sociais a:hover {
+      transform: scale(1.2);
     }
 
     .volume-control {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      background: rgba(26, 32, 44, 0.8);
       padding: 10px 15px;
       border-radius: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .volume-control input[type="range"] {
+      width: 100px;
+      margin: 0 10px;
+      -webkit-appearance: none;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .volume-control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #4fd1c5;
+      cursor: pointer;
+    }
+
+    .controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .controls button {
+      background: rgba(26, 32, 44, 0.8);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .controls button:hover {
+      background: #4fd1c5;
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
 
   <!-- 🎥 Vídeo de fundo -->
-  <video id="video-background" autoplay muted loop playsinline>
-    <source src="igarata6.mp4" type="video/mp4">
-    Seu navegador não suporta vídeo.
-  </video>
-
-  <!-- 🔊 Áudio MP3 -->
-  <audio id="audio" preload="auto" loop>
-    <source src="igarata6.mp3" type="audio/mpeg">
-  </audio>
-
-  <div class="content">
-    <h1>Bem-vindo ao CRAZY</h1>
-    <p>Clique em qualquer lugar para iniciar a música.</p>
+  <div class="video-container">
+    <video id="video-background" autoplay muted loop playsinline>
+      <source src="igarata6.mp4" type="video/mp4" />
+    </video>
   </div>
 
+  <!-- 🔊 Áudio de fundo -->
+  <audio id="audio" preload="auto" loop>
+    <source src="igarata6.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- 🔉 Controle de volume -->
   <div class="volume-control">
-    <label>Volume 🎵</label>
-    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5" />
+    <i class="fas fa-volume-down text-gray-300"></i>
+    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+    <i class="fas fa-volume-up text-gray-300"></i>
+  </div>
+
+  <!-- 🌐 Conteúdo principal -->
+  <main class="container mx-auto px-4 py-20 flex items-center justify-center">
+    <div class="user-card w-full max-w-md p-6">
+      <div class="flex flex-col items-center">
+        <div class="relative">
+          <img src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg" alt="Foto de Perfil" class="profile-pic">
+          <span class="status"></span>
+        </div>
+
+        <div class="mt-4 text-center">
+          <div class="flex items-center justify-center space-x-2">
+            <h2 class="text-xl font-bold">@dominacao</h2>
+            <i class="fas fa-gem text-purple-400" title="Nitro"></i>
+            <i class="fas fa-bolt text-yellow-400" title="Server Boost"></i>
+            <i class="fas fa-trophy text-blue-400" title="Quest"></i>
+          </div>
+          <p class="text-gray-300">Nível 8</p>
+        </div>
+
+        <div class="spotify-info mt-6 w-full">
+          <div class="flex items-center text-sm mb-1">
+            <i class="fab fa-spotify text-green-500 mr-2"></i>
+            <span>Ouvindo agora</span>
+          </div>
+
+          <div class="flex items-center">
+            <img src="https://i.imgur.com/bbabdf10acc7bb4c0eb50460d3ceec59.jpg" alt="Capa do Spotify" class="w-12 h-12 rounded mr-3">
+            <div>
+              <div class="font-medium">Dominando a Vida</div>
+              <div class="text-sm text-gray-400">@dominacao</div>
+            </div>
+          </div>
+
+          <div class="spotify-bar mt-3">
+            <div class="spotify-progress"></div>
+          </div>
+
+          <div class="flex justify-between text-xs text-gray-400 mt-1">
+            <span>1:42</span>
+            <span>3:25</span>
+          </div>
+        </div>
+
+        <div class="sociais mt-6">
+          <a href="https://instagram.com/crashador" target="_blank" class="text-pink-500 mx-2">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a href="https://tiktok.com/@crashador" target="_blank" class="text-black dark:text-white mx-2">
+            <i class="fab fa-tiktok text-xl"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="controls">
+    <button id="prevBtn">◀</button>
+    <button id="nextBtn">▶</button>
   </div>
 
   <script>
     const audio = document.getElementById('audio');
     const volumeControl = document.getElementById('volumeControl');
 
-    // Define volume inicial
     audio.volume = parseFloat(volumeControl.value);
 
-    // Inicia o áudio quando o usuário interagir com a página
+    // Iniciar áudio ao clicar
     document.body.addEventListener('click', () => {
-      audio.play().catch(e => console.log("Autoplay bloqueado", e));
+      audio.play().catch(() => {});
     }, { once: true });
 
-    // Controle de volume
     volumeControl.addEventListener('input', function () {
       audio.volume = parseFloat(this.value);
     });
+
+    // Spotify progress fake
+    setInterval(() => {
+      const progress = document.querySelector('.spotify-progress');
+      let width = parseFloat(progress.style.width) || 0;
+      width = (width + 0.5) % 100;
+      progress.style.width = width + '%';
+    }, 1000);
   </script>
 
 </body>
